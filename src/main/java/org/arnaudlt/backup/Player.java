@@ -10,7 +10,7 @@ class Player {
 
     public static void main(String args[]) {
         Scanner in = new Scanner(System.in);
-        int surfaceN = in.nextInt(); // the number of points used to draw the surface of Mars.
+        int surfaceN = in.nextInt(); // the number of positions used to draw the surface of Mars.
         Point[] land = new Point[surfaceN];
 
         for (int i = 0; i < surfaceN; i++) {
@@ -409,7 +409,7 @@ class Player {
     static class Surface {
 
         final int nbPoints;
-        Point[] points;
+        Point[] positions;
 
         int flatMinX;
         int flatMaxX;
@@ -419,7 +419,7 @@ class Player {
         int flatZoneStartingIndex;
 
         Surface(Point[] pts, int nbPoints) {
-            this.points = pts;
+            this.positions = pts;
             this.nbPoints = nbPoints;
         }
 
@@ -427,15 +427,15 @@ class Player {
         void build() {
             int prevY = -1;
             for (int i=0; i<nbPoints; i++) {
-                if (points[i].y == prevY) {
-                    flatMinX = (int) points[i-1].x;
-                    flatMaxX = (int) points[i].x;
-                    flatY = (int) points[i].y;
+                if (positions[i].y == prevY) {
+                    flatMinX = (int) positions[i-1].x;
+                    flatMaxX = (int) positions[i].x;
+                    flatY = (int) positions[i].y;
                     flatMidX = ( flatMinX + flatMaxX) / 2;
                     this.flatZoneStartingIndex = i-1;
                     break;
                 }
-                prevY = (int) points[i].y;
+                prevY = (int) positions[i].y;
             }
 
         }
@@ -445,7 +445,7 @@ class Player {
             boolean col = false;
             int seg = 0;
             do {
-                if (Geometry.intersect(p1, p2, points[seg], points[seg+1])) {
+                if (Geometry.intersect(p1, p2, positions[seg], positions[seg+1])) {
                     col = true;
                 }
                 seg++;
@@ -484,7 +484,7 @@ class Player {
         }
 
         boolean collideWithFlatZone(Point p1, Point p2) {
-            return Geometry.intersect(p1,p2, points[flatZoneStartingIndex], points[flatZoneStartingIndex+1]);
+            return Geometry.intersect(p1,p2, positions[flatZoneStartingIndex], positions[flatZoneStartingIndex+1]);
         }
     }
 
@@ -534,7 +534,7 @@ class Player {
         static String toString(Surface surf) {
             StringBuilder toRet = new StringBuilder();
             for (int i=0; i<surf.nbPoints; i++) {
-                toRet.append("new Player.Point(").append(surf.points[i].x).append(',').append(surf.points[i].y).append(")\n");
+                toRet.append("new Player.Point(").append(surf.positions[i].x).append(',').append(surf.positions[i].y).append(")\n");
 
             }
             return toRet.toString();
@@ -603,8 +603,8 @@ class Player {
             return false; // Doesn’t fall in any of the above cases
         }
 
-        // Given three colinear points p, q, r, the function checks if
-        // point q lies on line segment ‘pr’
+        // Given three colinear positions p, q, r, the function checks if
+        // position q lies on line segment ‘pr’
         static boolean onSegment(Point p, Point q, Point r)
         {
             if (q.x <= Utils.max(p.x, r.x) && q.x >= Utils.min(p.x, r.x) &&
