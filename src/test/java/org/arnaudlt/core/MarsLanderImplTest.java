@@ -1,16 +1,10 @@
 package org.arnaudlt.core;
 
-import java.util.Arrays;
-import org.arnaudlt.api.Control;
-import org.arnaudlt.api.ControlChain;
-import org.arnaudlt.api.Point;
-import org.arnaudlt.api.Position;
-import org.arnaudlt.api.Shuttle;
-import org.arnaudlt.api.Speed;
-import org.arnaudlt.api.Status;
-import org.arnaudlt.api.Surface;
+import org.arnaudlt.api.*;
 import org.junit.Assert;
 import org.junit.Test;
+
+import java.util.Arrays;
 
 public class MarsLanderImplTest {
 
